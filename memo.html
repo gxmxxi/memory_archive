@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko-KR" ng-app="memoApp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>기억 보관소</title>
+<link rel="stylesheet" type="text/css" href="memo.css"/>
+<script src="jquery-3.1.1.min.js"></script>
+<script src="angular.min.js"></script>
+<script src="memo.js"></script>
+
+</head>
+<body ng-controller="memoCtrl">
+<div class="wrapper" ng-class="{visible:contVisible}" ng-mousedown="resetCurrentMemo($event)">
+	<div memo-drct class="memoWrap">
+		<div ng-repeat="item in memoList" class="memoItem color{{item.c}}"
+			ng-style="{'left':item.x, 'top':item.y, 'width':item.w, 'height':item.h, 'z-index':item.z}"
+			ng-mousedown="updateZindex(item)"
+			ng-class="{onTop:item.dt == currentMemo.dt}">
+			<div class="memoTitle" ng-mousedown="dragStart($event, item, 'move')">{{item.dstr}}</div>
+			<div class="memoCont"><div><textarea ng-model="item.cont" ng-blur="memoBlur(item)" ng-focus="memoFocus(item)"></textarea></div></div>
+			<div class="memoSize" ng-mousedown="dragStart($event, item, 'size')"></div>
+			<div class="memoDel" ng-click="deleteMemo(item)" title="delete memo"></div>
+		</div>
+		<a class="memoAdd" ng-click="addMemo()" title="기억 보관하기">
+			
+		</a>
+	</div>
+</div>
+</body>
+</html>
